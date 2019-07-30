@@ -24,7 +24,7 @@ type FichaTecnica struct {
 
 // Produto corresponde ao livro
 type Produto struct {
-	Key         string
+	Key          string
 	Categoria    string
 	Autor        string
 	Editora      string
@@ -92,8 +92,18 @@ func main() {
 	})
 
 	productCollector.OnHTML("div.detailProduct", func(e *colly.HTMLElement) {
-		title := e.ChildText("h1")
-		fmt.Println("Scrapping product " + title)
+		// title := e.ChildText("h1")
+		// imageURL := e.ChildAttr("img", "src")
+		// autor := strings.Replace(e.ChildText("dl.autor-editora dd:nth-of-type(1)"), " (veja mais livros deste autor)", "", -1)
+		// editora := strings.Replace(e.ChildText("dl.autor-editora dd:nth-of-type(2)"), "(veja mais livros desta editora)", "", -1)
+		// preco := strings.Replace(e.ChildText("p.prices ins"), "Por: R$ ", "", -1)
+		descricao := e.ChildText("div.product-description")
+		dimensoes := e.ChildText("dl#bookData dd:nth-of-type(1)")
+		marca := e.ChildText("dl#bookData dd:nth-of-type(2)")
+		isbn := e.ChildText("dl#bookData dd:nth-of-type(3)")
+		peso := e.ChildText("dl#bookData dd:nth-of-type(4)")
+
+		fmt.Println(descricao + dimensoes + marca + peso + isbn)
 	})
 
 	catCollector.OnRequest(func(r *colly.Request) {
